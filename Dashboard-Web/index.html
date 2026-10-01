@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ProdMon Dashboard</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ===================================================== -->
+    <!-- BARRE SUPÉRIEURE -->
+    <!-- ===================================================== -->
+
+    <header class="topbar">
+
+        <button id="menuButton"
+                class="menu-button">
+            ☰
+        </button>
+
+        <div class="brand">
+
+            <h1>ProdMon</h1>
+
+            <span>
+                Production Monitoring
+            </span>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <span class="status-dot"></span>
+
+            <span>
+                API connectée
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- ===================================================== -->
+    <!-- MENU LATÉRAL -->
+    <!-- ===================================================== -->
+
+    <aside id="sidebar"
+           class="sidebar">
+
+        <div class="sidebar-header">
+
+            <h2>PRODMON</h2>
+
+            <p>
+                Supervision industrielle
+            </p>
+
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <button class="nav-item active"
+                    data-page="dashboard">
+
+                <span class="nav-icon">🏠</span>
+
+                <span>
+                    Tableau de bord
+                </span>
+
+            </button>
+
+            <button class="nav-item"
+                    data-page="machines">
+
+                <span class="nav-icon">🏭</span>
+
+                <span>
+                    Machines
+                </span>
+
+            </button>
+
+            <button class="nav-item"
+                    data-page="production">
+
+                <span class="nav-icon">📊</span>
+
+                <span>
+                    Production
+                </span>
+
+            </button>
+
+            <button class="nav-item"
+                    data-page="alerts">
+
+                <span class="nav-icon">⚠️</span>
+
+                <span>
+                    Alertes
+                </span>
+
+            </button>
+
+            <button class="nav-item"
+                    data-page="notifications">
+
+                <span class="nav-icon">🔔</span>
+
+                <span>
+                    Notifications
+                </span>
+
+            </button>
+
+            <!-- NOUVEAU : INTERVENTIONS MAINTENANCE -->
+
+            <button class="nav-item"
+                    data-page="interventions">
+
+                <span class="nav-icon">🔧</span>
+
+                <span>
+                    Interventions Maintenance
+                </span>
+
+            </button>
+
+            <button class="nav-item"
+                    data-page="commands">
+
+                <span class="nav-icon">🎮</span>
+
+                <span>
+                    Commandes
+                </span>
+
+            </button>
+
+            <button class="nav-item"
+                    data-page="users">
+
+                <span class="nav-icon">👥</span>
+
+                <span>
+                    Utilisateurs
+                </span>
+
+            </button>
+
+            <button class="nav-item"
+                    data-page="analytics">
+
+                <span class="nav-icon">📈</span>
+
+                <span>
+                    Analyses
+                </span>
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- ===================================================== -->
+    <!-- CONTENU PRINCIPAL -->
+    <!-- ===================================================== -->
+
+    <main id="mainContent"
+          class="main-content">
+
+
+        <!-- ================================================= -->
+        <!-- PAGE DASHBOARD -->
+        <!-- ================================================= -->
+
+        <section id="dashboard"
+                 class="page active-page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>
+                        Tableau de bord
+                    </h2>
+
+                    <p>
+                        Vue globale de la production industrielle
+                    </p>
+
+                </div>
+
+                <button id="refreshDashboard"
+                        class="refresh-button">
+                    ↻ Actualiser
+                </button>
+
+            </div>
+
+
+            <!-- KPI -->
+
+            <div class="kpi-grid">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        🏭
+                    </div>
+
+                    <div>
+
+                        <p>Machines</p>
+
+                        <h3 id="machineCount">
+                            --
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <p>Production</p>
+
+                        <h3 id="productionValue">
+                            --
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        🌡️
+                    </div>
+
+                    <div>
+
+                        <p>Température</p>
+
+                        <h3 id="temperatureValue">
+                            -- °C
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-icon">
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <p>Alertes</p>
+
+                        <h3 id="alertCount">
+                            --
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GRAPHIQUES -->
+
+            <div class="chart-grid">
+
+                <div class="chart-card">
+
+                    <h3>
+                        Production dans le temps
+                    </h3>
+
+                    <div class="chart-container">
+                        <canvas id="productionChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="chart-card">
+
+                    <h3>
+                        Température dans le temps
+                    </h3>
+
+                    <div class="chart-container">
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ALERTES RÉCENTES -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Alertes récentes
+                    </h3>
+
+                </div>
+
+                <div id="recentAlerts">
+
+                    <p class="empty-message">
+                        Chargement des alertes...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- MACHINES -->
+        <!-- ================================================= -->
+
+        <section id="machines"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Machines</h2>
+
+                    <p>
+                        Liste des machines de production
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="machinesContainer"
+                 class="content-grid">
+
+                <p class="empty-message">
+                    Chargement des machines...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- PRODUCTION -->
+        <!-- ================================================= -->
+
+        <section id="production"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Production</h2>
+
+                    <p>
+                        Données de production et mesures capteurs
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="productionContainer">
+
+                <p class="empty-message">
+                    Chargement des données...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- ALERTES -->
+        <!-- ================================================= -->
+
+        <section id="alerts"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Alertes</h2>
+
+                    <p>
+                        Historique des anomalies détectées
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="alertsContainer">
+
+                <p class="empty-message">
+                    Chargement des alertes...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- NOTIFICATIONS -->
+        <!-- ================================================= -->
+
+        <section id="notifications"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Notifications</h2>
+
+                    <p>
+                        Historique des notifications système
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="notificationsContainer">
+
+                <p class="empty-message">
+                    Chargement des notifications...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- INTERVENTIONS MAINTENANCE -->
+        <!-- ================================================= -->
+
+        <section id="interventions"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Interventions Maintenance</h2>
+
+                    <p>
+                        Historique des interventions réalisées par les techniciens
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="interventionsContainer">
+
+                <p class="empty-message">
+                    Chargement des interventions...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- COMMANDES -->
+        <!-- ================================================= -->
+
+        <section id="commands"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Historique des commandes</h2>
+
+                    <p>
+                        Historique des commandes envoyées aux machines
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="commandsContainer">
+
+                <p class="empty-message">
+                    Chargement des commandes...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- UTILISATEURS -->
+        <!-- ================================================= -->
+
+        <section id="users"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Utilisateurs</h2>
+
+                    <p>
+                        Consultation des utilisateurs et des rôles ProdMon
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="usersContainer">
+
+                <p class="empty-message">
+                    Chargement des utilisateurs...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- ANALYSES / TRS-OEE -->
+        <!-- ================================================= -->
+
+        <section id="analytics"
+                 class="page">
+
+            <div class="page-header analytics-page-header">
+
+                <div>
+
+                    <h2>
+                        Analyses & TRS / OEE
+                    </h2>
+
+                    <p>
+                        Indicateurs de performance calculés à partir des données ProdMon
+                    </p>
+
+                </div>
+
+                <button id="refreshAnalytics"
+                        class="refresh-button">
+                    ↻ Actualiser
+                </button>
+
+            </div>
+
+
+            <div class="analytics-note">
+
+                <strong>Mode prototype :</strong>
+
+                le TRS affiché est une estimation.
+                La disponibilité est estimée à partir des états
+                RUNNING/STOPPED, la performance est comparée à une
+                production cible configurable et la qualité est
+                supposée à 100 % car les pièces rebutées ne sont pas
+                encore mesurées par ProdMon.
+
+            </div>
+
+
+            <!-- FILTRES -->
+
+            <div class="analytics-toolbar">
+
+                <div>
+
+                    <label for="analyticsMachineFilter">
+                        Machine
+                    </label>
+
+                    <select id="analyticsMachineFilter">
+
+                        <option value="ALL">
+                            Toutes les machines
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="targetProduction">
+                        Production cible
+                    </label>
+
+                    <input id="targetProduction"
+                           type="number"
+                           min="1"
+                           step="1"
+                           value="150">
+
+                </div>
+
+            </div>
+
+
+            <!-- KPI TRS -->
+
+            <div class="analytics-kpi-grid">
+
+                <div class="analytics-kpi-card">
+
+                    <span class="analytics-kpi-icon">
+                        ⏱️
+                    </span>
+
+                    <div>
+
+                        <p>
+                            Disponibilité estimée
+                        </p>
+
+                        <h3 id="availabilityValue">
+                            -- %
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-kpi-card">
+
+                    <span class="analytics-kpi-icon">
+                        ⚡
+                    </span>
+
+                    <div>
+
+                        <p>
+                            Performance estimée
+                        </p>
+
+                        <h3 id="performanceValue">
+                            -- %
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-kpi-card">
+
+                    <span class="analytics-kpi-icon">
+                        ✅
+                    </span>
+
+                    <div>
+
+                        <p>
+                            Qualité (hypothèse prototype)
+                        </p>
+
+                        <h3 id="qualityValue">
+                            100 %
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-kpi-card analytics-kpi-oee">
+
+                    <span class="analytics-kpi-icon">
+                        📈
+                    </span>
+
+                    <div>
+
+                        <p>
+                            TRS / OEE estimé
+                        </p>
+
+                        <h3 id="oeeValue">
+                            -- %
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- KPI SECONDAIRES -->
+
+            <div class="analytics-secondary-grid">
+
+                <div class="analytics-small-card">
+
+                    <span>
+                        📦 Production maximale observée
+                    </span>
+
+                    <strong id="analyticsProduction">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-small-card">
+
+                    <span>
+                        🌡️ Température moyenne
+                    </span>
+
+                    <strong id="analyticsTemperature">
+                        -- °C
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-small-card">
+
+                    <span>
+                        ⚠️ Alertes enregistrées
+                    </span>
+
+                    <strong id="analyticsAlerts">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-small-card">
+
+                    <span>
+                        🧾 Mesures analysées
+                    </span>
+
+                    <strong id="analyticsSamples">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- GRAPHIQUES ANALYSES -->
+
+            <div class="chart-grid analytics-chart-grid">
+
+                <div class="chart-card">
+
+                    <h3>
+                        Répartition des états machine
+                    </h3>
+
+                    <div class="chart-container">
+
+                        <canvas id="machineStateChart"></canvas>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-card">
+
+                    <h3>
+                        Répartition des alertes
+                    </h3>
+
+                    <div class="chart-container">
+
+                        <canvas id="alertTypeChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- INTERPRÉTATION -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Interprétation du TRS
+                    </h3>
+
+                </div>
+
+                <div id="oeeInterpretation"
+                     class="oee-interpretation">
+
+                    Chargez les données pour afficher l'analyse.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ===================================================== -->
+    <!-- CHART.JS -->
+    <!-- ===================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- ===================================================== -->
+    <!-- SCRIPT PRODMON -->
+    <!-- ===================================================== -->
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
